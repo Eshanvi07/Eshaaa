@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNS Institute of Technology</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1.5" fill="white" opacity="0.05"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255,107,107,0.6);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Us */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        /* Achievements Wall */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        /* Course Explorer */
+        .course-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-category {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .course-category:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .courses-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Placement Offers */
+        .placement-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .placement-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .placement-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Map & Directions */
+        #map {
+            height: 400px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Announcements */
+        .announcement {
+            background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 50%, #FEF5E7 100%);
+            margin-bottom: 1.5rem;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #FF6B6B;
+            transition: all 0.3s ease;
+        }
+
+        .announcement:hover {
+            transform: translateX(10px);
+        }
+
+        /* Fee Payment */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .payment-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: #f8f9ff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Accreditations */
+        .accreditation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .accreditation-logo {
+            height: 100px;
+            width: auto;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+
+        .accreditation-item:hover .accreditation-logo {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #667eea;
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid,
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-university"></i> RNSIT
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#placements">Placements</a></li>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#announcements">Announcements</a></li>
+                <li><a href="#fees">Fees</a></li>
+                <li><a href="#accreditations">Accreditations</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to RNSIT</h1>
+            <p>Excellence in Engineering Education Since 2001</p>
+            <a href="#about" class="cta-button">Explore Our Legacy</a>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section id="about" class="fade-in">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-grid">
+            <div class="about-content">
+                <h3>Premier Engineering Institution</h3>
+                <p>RNS Institute of Technology, established in 2001, is one of the leading engineering colleges in Bangalore. Affiliated to VTU and approved by AICTE, we nurture innovation and excellence.</p>
+                <p>Our 25-acre lush green campus provides state-of-the-art infrastructure and world-class facilities for holistic student development.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">25+</div>
+                        <div>Years of Excellence</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2500+</div>
+                        <div>Students</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">150+</div>
+                        <div>Faculty Members</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">95%</div>
+                        <div>Placement Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative;">
+                <div style="position: absolute; top: -50px; right: -50px; width: 400px; height: 400px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; opacity: 0.1; z-index: -1;"></div>
+                <i class="fas fa-graduation-cap" style="font-size: 15rem; color: #667eea; opacity: 0.1; position: absolute; top: 20%; left: 20%;"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Achievements Wall -->
+    <section id="achievements" class="fade-in" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+        <h2 class="section-title">Student Achievements Wall</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <i class="fas fa-trophy" style="font-size: 3rem; color: #FF6B6B; margin-bottom: 1rem;"></i>
+                <h3>National Tech Fest Winner</h3>
+                <p>Team RNSIT won 1st prize at VTU Tech Fest 2025 with their AI-powered smart traffic system.</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-medal" style="font-size: 3rem; color: #4ECDC4; margin-bottom: 1rem;"></i>
+                <h3>Hackathon Champions</h3>
+                <p>Won Smart India Hackathon 2025 Regional Finals in Healthcare Innovation category.</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-rocket" style="font-size: 3rem; color: #45B7D1; margin-bottom: 1rem;"></i>
+                <h3>Startup Success</h3>
+                <p>Alumni startup AgriTech Solutions raised $2M in Series A funding this year.</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-chart-line" style="font-size: 3rem; color: #96CEB4; margin-bottom: 1rem;"></i>
+                <h3>Placement Record</h3>
+                <p>Highest package of ₹52 LPA offered by Microsoft in 2025 placements.</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-award" style="font-size: 3rem; color: #FECA57; margin-bottom: 1rem;"></i>
+                <h3>Sports Excellence</h3>
+                <p>Bagged 3 Gold medals at KLEF University Intercollegiate Sports Meet.</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-users" style="font-size: 3rem; color: #FF9FF3; margin-bottom: 1rem;"></i>
+                <h3>Research Publications</h3>
+                <p>45 research papers published in Scopus indexed journals in 2025.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Explorer -->
+    <section id="courses" class="fade-in">
+        <h2 class="section-title">Course Explorer</h2>
+        <div class="course-categories">
+            <div class="course-category" onclick="filterCourses('ug')">
+                <i class="fas fa-graduation-cap" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h3>UG Programs</h3>
+            </div>
+            <div class="course-category" onclick="filterCourses('pg')">
+                <i class="fas fa-book" style="font-size: 3rem; color: #764ba2; margin-bottom: 1rem;"></i>
+                <h3>PG Programs</h3>
+            </div>
+            <div class="course-category" onclick="filterCourses('all')">
+                <i class="fas fa-layer-group" style="font-size: 3rem; color: #FF6B6B; margin-bottom: 1rem;"></i>
+                <h3>All Programs</h3>
+            </div>
+        </div>
+        <div class="courses-list" id="coursesList">
+            <div class="course-card" data-type="ug">
+                <h3>BE - Computer Science</h3>
+                <p>4 Years • 120 Seats • AI/ML Specialization</p>
+                <div style="margin-top: 1rem;">
+                    <span style="background: #4ECDC4; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem;">98% Placement</span>
+                </div>
+            </div>
+            <div class="course-card" data-type="ug">
+                <h3>BE - Information Science</h3>
+                <p>4 Years • 60 Seats • Data Science Focus</p>
+                <div style="margin-top: 1rem;">
+                    <span style="background: #45B7D1; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem;">96% Placement</span>
+                </div>
+            </div>
+            <div class="course-card" data-type="ug">
+                <h3>BE - Electronics & Communication</h3>
+                <p>4 Years • 60 Seats • VLSI & IoT</p>
+            </div>
+            <div class="course-card" data-type="pg">
+                <h3>M.Tech - CSE</h3>
+                <p>2 Years • 18 Seats • Research Oriented</p>
+            </div>
+            <div class="course-card" data-type="pg">
+                <h3>M.Tech - VLSI Design</h3>
+                <p>2 Years • 18 Seats • Industry Collaboration</p>
+            </div>
+            <div class="course-card" data-type="ug">
+                <h3>BE - Mechanical Engineering</h3>
+                <p>4 Years • 60 Seats • Industry 4.0 Ready</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placement Offers -->
+    <section id="placements" class="fade-in" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+        <h2 class="section-title">Placement Offers 2025</h2>
+        <div class="placement-stats">
+            <div class="placement-card">
+                <div style="font-size: 3rem;">₹52 LPA</div>
+                <div>Highest Package</div>
+            </div>
+            <div class="placement-card">
+                <div style="font-size: 3rem;">₹8.2 LPA</div>
+                <div>Average Package</div>
+            </div>
+            <div class="placement-card">
+                <div style="font-size: 3rem;">425</div>
+                <div>Offers Made</div>
+            </div>
+            <div class="placement-card">
+                <div style="font-size: 3rem;">95%</div>
+                <div>Placement Rate</div>
+            </div>
+        </div>
+        <div class="placement-list">
+            <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h4 style="color: #667eea;">Top Recruiters</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                    <span style="background: #FF6B6B; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">Microsoft</span>
+                    <span style="background: #4ECDC4; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">Amazon</span>
+                    <span style="background: #45B7D1; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">Google</span>
+                    <span style="background: #96CEB4; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">Infosys</span>
+                    <span style="background: #FECA57; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">TCS</span>
+                    <span style="background: #FF9FF3; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;">Accenture</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Directions & Google Map -->
+    <section id="location" class="fade-in">
+        <h2 class="section-title">Visit Us</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div>
+                <h3 style="color: #667eea; margin-bottom: 1rem;">📍 RNS Institute of Technology</h3>
+                <p><strong>Address:</strong> RNSIT Post, Dr.Vishnuvardhan road,  RR nagar, Bengaluru - 560098, Karnataka, India</p>
+                <br>
+                <p><i class="fas fa-phone"></i> +91-80-28610300</p>
+                <p><i class="fas fa-envelope"></i> principal@rnsit.ac.in</p>
+                <br>
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1.5rem; border-radius: 15px;">
+                    <h4>🗺️ Directions</h4>
+                    <p>2.5 km from Rajajinagar Metro Station<br>5 km from Yeshwantpur Railway Station<br>15 km from Kempegowda International Airport</p>
+                </div>
+            </div>
+            <div>
+                <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.562614748199!2d77.0925476145478!3d12.994057690826684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae17b4f6e5b5b7%3A0xbeca7b0c5e6f2d4d!2sRNS%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Announcements -->
+    <section id="announcements" class="fade-in" style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);">
+        <h2 class="section-title">Latest Announcements</h2>
+        <div>
+            <div class="announcement">
+                <h4>🎉 Placement Drive - Microsoft (Mar 30, 2026)</h4>
+                <p>Eligible branches: CSE, ISE. Register by March 28th. Package: ₹25-52 LPA</p>
+            </div>
+            <div class="announcement">
+                <h4>📚 End Semester Exams Schedule Released</h4>
+                <p>April 10 - April 25, 2026. Detailed timetable available on student portal.</p>
+            </div>
+            <div class="announcement">
+                <h4>🚀 Tech Fest Luminus'26 - Registrations Open</h4>
+                <p>March 28 - April 5. Workshops, competitions & industry talks. Register now!</p>
+            </div>
+            <div class="announcement">
+                <h4>💰 Fee Payment Last Date Extended</h4>
+                <p>Pay semester fees by April 5th with ₹500 late fee. Online payment available.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fee Payment -->
+    <section id="fees" class="fade-in">
+        <h2 class="section-title">Fee Payment Portal</h2>
+        <div class="payment-grid">
+            <div>
+                <h3 style="color: #667eea; margin-bottom: 2rem;">Secure Online Payment</h3>
+                <div class="payment-option" onclick="selectPayment('upi')">
+                    <i class="fab fa-google-pay" style="font-size: 2rem; color: #667eea; margin-right: 1rem;"></i>
+                    <div>
+                        <div style="font-weight: bold;">UPI Payment</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Google Pay, PhonePe, Paytm</div>
+                    </div>
+                </div>
+                <div class="payment-option" onclick="selectPayment('card')">
+                    <i class="fas fa-credit-card" style="font-size: 2rem; color: #FF6B6B; margin-right: 1rem;"></i>
+                    <div>
+                        <div style="font-weight: bold;">Credit/Debit Card</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Visa, MasterCard, RuPay</div>
+                    </div>
+                </div>
+                <div class="payment-option" onclick="selectPayment('netbanking')">
+                    <i class="fas fa-university" style="font-size: 2rem; color: #4ECDC4; margin-right: 1rem;"></i>
+                    <div>
+                        <div style="font-weight: bold;">Net Banking</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">All Major Banks</div>
+                    </div>
+                </div>
+                <button onclick="processPayment()" style="width: 100%; background: linear-gradient(45deg, #FF6B6B, #FFD93D); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; margin-top: 2rem; cursor: pointer;">Proceed to Payment</button>
+            </div>
+            <div class="payment-form">
+                <h3>Fee Structure (2025-26)</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h4>UG Programs (Per Semester)</h4>
+                        <p>Tuition Fee: ₹95,000<br>Development Fee: ₹10,000<br><strong>Total: ₹1,10,000</strong></p>
+                    </div>
+                    <div>
+                        <h4>PG Programs (Per Semester)</h4>
+                        <p>Tuition Fee: ₹75,000<br>Development Fee: ₹8,000<br><strong>Total: ₹85,000</strong></p>
+                    </div>
+                </div>
+                <div style="background: #f8f9ff; padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
+                    <h4>Payment Status</h4>
+                    <p id="paymentStatus" style="font-size: 1.1rem; color: #667eea; font-weight: bold;">Pending Payment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accreditations -->
+    <section id="accreditations" class="fade-in" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <h2 class="section-title" style="color: white;">Accreditations & Rankings</h2>
+        <div class="accreditation-grid">
+            <div class="accreditation-item" style="text-align: center; padding: 2rem;">
+                <img src="https://via.placeholder.com/200x100/FFD700/000?text=AICTE" alt="AICTE" class="accreditation-logo">
+                <p>Approved by AICTE</p>
+            </div>
+            <div class="accreditation-item" style="text-align: center; padding: 2rem;">
+                <img src="https://via.placeholder.com/200x100/00BFFF/000?text=VTU" alt="VTU" class="accreditation-logo">
+                <p>Affiliated to VTU</p>
+            </div>
+            <div class="accreditation-item" style="text-align: center; padding: 2rem;">
+                <img src="https://via.placeholder.com/200x100/FF6B6B/000?text=NAAC+A" alt="NAAC" class="accreditation-logo">
+                <p>NAAC 'A' Grade</p>
+            </div>
+            <div class="accreditation-item" style="text-align: center; padding: 2rem;">
+                <img src="https://via.placeholder.com/200x100/4ECDC4/000?text=NIRF+151-200" alt="NIRF" class="accreditation-logo">
+                <p>NIRF Ranked 151-200</p>
+            </div>
+            <div class="accreditation-item" style="text-align: center; padding: 2rem;">
+                <img src="https://via.placeholder.com/200x100/45B7D1/000?text=NBA" alt="NBA" class="accreditation-logo">
+                <p>4 Programs NBA Accredited</p>
+            </div>
+            <div class="accreditation-item" style="text-align: center; padding: 2rem;">
+                <img src="https://via.placeholder.com/200x100/96CEB4/000?text=ISO+9001" alt="ISO" class="accreditation-logo">
+                <p>ISO 9001:2015 Certified</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Course filter
+        function filterCourses(type) {
+            const courses = document.querySelectorAll('.course-card');
+            courses.forEach(course => {
+                if (type === 'all' || course.dataset.type === type) {
+                    course.style.display = 'block';
+                    course.style.animation = 'fadeInUp 0.5s ease';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        }
+
+        // Payment functionality
+        let selectedPayment = '';
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.style.background = '#f8f9ff';
+                opt.style.color = '#333';
+            });
+            event.target.closest('.payment-option').style.background = '#667eea';
+            event.target.closest('.payment-option').style.color = 'white';
+        }
+
+        function processPayment() {
+            if (!selectedPayment) {
+                alert('Please select a payment method');
+                return;
+            }
+            document.getElementById('paymentStatus').textContent = 'Payment Successful! ✅';
+            document.getElementById('paymentStatus').style.color = '#4ECDC4';
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                alert('Payment processed successfully! Receipt sent to your email.');
+            }, 1000);
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
